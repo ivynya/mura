@@ -15,11 +15,12 @@
       <div>
         <p class="tag"><code>Currently Scheduling</code></p>
         <h2>{$mura.meeting_name}</h2>
+        <p>{$mura.meeting_desc}</p>
         <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hour Long</p>
       </div>
-      <div>
-        <h3>Suggested Meeting Time</h3>
-        <p><b>May 5th at 3:00 PT</b></p>
+      <div class="suggested-time">
+        <h3>Mura Suggested Time</h3>
+        <p class="tag"><b>May 5th at 3:00 PT</b></p>
         <p>25 People • Includes You</p>
       </div>
     </div>
@@ -54,15 +55,34 @@
         border-radius: 0.5rem;
         color: #2EC4B6;
         display: inline-block;
+
         font-size: 0.75rem;
         font-weight: bold;
-        padding: 0.25rem 0.5rem;
+        
+        margin: 0.5rem 0;
+        margin-top: 0;
+        padding: 0.25rem 0.75rem;
         text-transform: uppercase;
       }
 
       h2 {
         font-size: 2rem;
         margin: 0;
+      }
+
+      .suggested-time {
+        border: 1px solid #011627;
+        border-radius: 0.5rem;
+        padding: 1.5rem 2rem;
+
+        h3 {
+          background-color: #f5fff1;
+          margin-top: -2.5rem;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
       }
 		}
 	}
