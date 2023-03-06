@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 
 export interface Mura {
   meeting_name: string;
+  meeting_desc: string;
   meeting_id: string;
   meeting_host: string;
   meeting_length: number;
@@ -23,7 +24,8 @@ export interface Mura {
 }
 
 export const mura = writable<Mura>({
-  meeting_name: "Meeting",
+  meeting_name: "Study Session Meetup",
+  meeting_desc: "Study session for the upcoming CALC 1D exam",
   meeting_id: "XYZI",
   meeting_host: "Ivy",
   meeting_length: 1,
@@ -39,11 +41,15 @@ export const mura = writable<Mura>({
       availability: [
         {
           date: "2023-03-06T00:00:00.000Z",
-          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21]
         },
         {
           date: "2023-03-07T00:00:00.000Z",
           times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        },
+        {
+          date: "2023-03-10T00:00:00.000Z",
+          times: [17]
         },
       ]
     },
