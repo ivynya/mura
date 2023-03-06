@@ -1,17 +1,37 @@
-<script>
+<script lang="ts">
 	import Header from "./Header.svelte";
 	import TimePicker from "./TimePicker.svelte";
+
+  function getDateFromDay(from: Date, day: number) {
+    from.setDate(from.getDate() + day);
+    switch (from.getUTCDay()) {
+      case 0:
+        return "Sun";
+      case 1:
+        return "Mon";
+      case 2:
+        return "Tue";
+      case 3:
+        return "Wed";
+      case 4:
+        return "Thu";
+      case 5:
+        return "Fri";
+      case 6:
+        return "Sat";
+    }
+  }
 </script>
 
 <div class="app">
   <Header />
 	<main>
 		<div class="picker">
-      {#each Array(10) as _, i}
+      {#each Array(7) as _, i}
         <div class="day">
           <div class="day-number">
             <span>{i + 1}</span>
-            <span>MON</span>
+            <span>{getDateFromDay(new Date(), i)}</span>
           </div>
           <TimePicker />
         </div>
@@ -60,19 +80,20 @@
       .day {
         display: flex;
         flex: 1 1;
+        text-transform: uppercase;
 
         > div {
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding-left: 2rem;
-          padding-right: 1rem;
+          padding-left: 2.5rem;
+          padding-right: 2rem;
           width: 2rem;
 
           font-size: 2rem;
 
-          :last-child {
+          :not(:first-child) {
             font-size: 0.75rem;
           }
         }
