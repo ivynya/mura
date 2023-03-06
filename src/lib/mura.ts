@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-interface Mura {
+export interface Mura {
   meeting_name: string;
   meeting_id: string;
   meeting_host: string;
@@ -17,8 +17,7 @@ interface Mura {
     name: string;
     availability: {
       date: string;
-      time_from: string;
-      time_to: string;
+      times: number[];
     }[];
   }[];
 }
@@ -32,7 +31,55 @@ export const mura = writable<Mura>({
   type: "one-time",
   date_from: "2023-03-06T00:00:00.000Z",
   date_to: "2023-03-12T00:00:00.000Z",
-  time_from: "",
-  time_to: "",
-  participants: []
+  time_from: "2023-01-01T09:00:00.000Z",
+  time_to: "2023-01-01T23:00:00.000Z",
+  participants: [
+    {
+      name: "Ivy",
+      availability: [
+        {
+          date: "2023-03-06T00:00:00.000Z",
+          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        },
+        {
+          date: "2023-03-07T00:00:00.000Z",
+          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        },
+      ]
+    },
+    {
+      name: "Ken",
+      availability: [
+        {
+          date: "2023-03-08T00:00:00.000Z",
+          times: [12, 13, 14, 15, 16]
+        },
+        {
+          date: "2023-03-07T00:00:00.000Z",
+          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        },
+      ]
+    },
+    {
+      name: "John",
+      availability: [
+        {
+          date: "2023-03-06T00:00:00.000Z",
+          times: [15, 16, 17, 18]
+        },
+        {
+          date: "2023-03-07T00:00:00.000Z",
+          times: [10, 15, 16, 17, 18]
+        },
+        {
+          date: "2023-03-08T00:00:00.000Z",
+          times: [15, 16, 17, 18, 19]
+        },
+        {
+          date: "2023-03-11T00:00:00.000Z",
+          times: [10, 11, 15, 16, 17, 18, 19, 20, 21, 22]
+        },
+      ]
+    }
+  ]
 });
