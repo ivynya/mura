@@ -112,7 +112,8 @@
 
 <style lang="scss">
 	header {
-		padding: 0.75rem 2rem;
+		padding: 1rem 2rem;
+    padding-top: 0.25rem;
 
     svg {
       height: 75px;
