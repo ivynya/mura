@@ -11,14 +11,24 @@
         <div class="day">
           <div class="day-number">
             <span>{i + 1}</span>
-            <span>Monday</span>
+            <span>MON</span>
           </div>
           <TimePicker />
         </div>
       {/each}
     </div>
 		<div class="info-bar">
-      <h2>Meeting Name Here</h2>
+      <div>
+        <p class="tag"><code>Currently Scheduling</code></p>
+        <h2>Meeting Name Here</h2>
+        <p>Hosted by <b>Ivy</b> • 1 Hour Long</p>
+      </div>
+
+      <div>
+        <h3>Suggested Meeting Time</h3>
+        <p><b>May 5th at 3:00 PT</b></p>
+        <p>25 People • Includes You</p>
+      </div>
     </div>
 	</main>
 </div>
@@ -44,7 +54,8 @@
       display: flex;
       flex-direction: column;
 			flex: 1 1;
-      margin: 0 2rem;
+      margin-left: 2.5rem;
+      margin-right: 1.5rem;
 
       .day {
         display: flex;
@@ -55,12 +66,20 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 0 2rem;
+          padding-left: 2rem;
+          padding-right: 1rem;
+          width: 2rem;
+
+          font-size: 2rem;
+
+          :last-child {
+            font-size: 0.75rem;
+          }
         }
       }
 
       > :nth-child(odd) {
-        background: #f5fff111;
+        background: #f5fff10a;
       }
 		}
 
@@ -75,6 +94,17 @@
 			flex: 1 1;
       padding: 1rem;
       text-align: center;
+
+      .tag {
+        background: #011627;
+        border-radius: 0.5rem;
+        color: #2EC4B6;
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: bold;
+        padding: 0.25rem 0.5rem;
+        text-transform: uppercase;
+      }
 
       h2 {
         font-size: 2rem;
