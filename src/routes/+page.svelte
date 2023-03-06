@@ -1,6 +1,10 @@
 <script lang="ts">
 	import Header from "./Header.svelte";
 	import TimePicker from "./TimePicker.svelte";
+  import { mura } from "$lib/mura";
+
+  $: from = new Date($mura.date_from);
+  $: to = new Date($mura.date_to).getDate() - from.getDate();
 
   function getDateFromDay(from: Date, day: number) {
     from.setDate(from.getDate() + day);
@@ -27,10 +31,10 @@
   <Header />
 	<main>
 		<div class="picker">
-      {#each Array(7) as _, i}
+      {#each Array(to + 1) as _, i}
         <div class="day">
           <div class="day-number">
-            <span>{i + 1}</span>
+            <span>{i + 1 + from.getDate()}</span>
             <span>{getDateFromDay(new Date(), i)}</span>
           </div>
           <TimePicker />
@@ -40,10 +44,9 @@
 		<div class="info-bar">
       <div>
         <p class="tag"><code>Currently Scheduling</code></p>
-        <h2>Meeting Name Here</h2>
-        <p>Hosted by <b>Ivy</b> • 1 Hour Long</p>
+        <h2>{$mura.meeting_name}</h2>
+        <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hour Long</p>
       </div>
-
       <div>
         <h3>Suggested Meeting Time</h3>
         <p><b>May 5th at 3:00 PT</b></p>
