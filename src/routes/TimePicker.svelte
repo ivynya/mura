@@ -7,26 +7,31 @@
   $: from = new Date(mura.time_from).getUTCHours();
   $: to = new Date(mura.time_to).getUTCHours() - from;
 
+  // Generate a normalized value from 0 to 5 for availability
+  // based on participant availability and total participants
   $: participantCount = mura.participants.length;
-
   function calculateHeatmapNormal(hour: number) {
     const availability = mura.participants.map(p => p.availability);
     const available = availability
       .filter(a => a.some(d => d.date === date && d.times.some(t => t === hour)))
     return ((available.length / participantCount) * 5).toFixed(0);
   }
+
+  // Converts a displayed hour index (i + from) in UTC to
+  // local time zone hours, in 24 hour format (0-23)
+  function localizeHour(index: number) {
+    const hour = index + from;
+    const utc = new Date();
+    utc.setUTCHours(hour);
+    return utc.getHours();
+  }
 </script>
 
 <div class="picker">
   {#each Array(to + 1) as _, i}
-    <button class="heatmap-{calculateHeatmapNormal(i + from)}">{(i + from - 1) % 12 + 1}<br>
-      <span>
-        {#if i + from < 12}
-          AM
-        {:else}
-          PM
-        {/if}
-      </span>
+    <button class="heatmap-{calculateHeatmapNormal(i + from)}">
+      {localizeHour(i) % 12 + 1}<br>
+      <span>{#if localizeHour(i) < 11}AM{:else}PM{/if}</span>
     </button>
   {/each}
 </div>
