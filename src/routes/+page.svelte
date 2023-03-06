@@ -2,9 +2,6 @@
 	import Header from "./Header.svelte";
 	import Picker from "./Picker.svelte";
   import { mura } from "../lib/mura";
-
-  $: from = new Date($mura.date_from);
-  $: to = new Date($mura.date_to).getDate() - from.getDate();
 </script>
 
 <div class="app">
@@ -13,10 +10,11 @@
     <Picker bind:mura={$mura} />
 		<div class="info-bar">
       <div>
-        <p class="tag"><code>Currently Scheduling</code></p>
+        <p class="tag"><code>Currently Scheduling #{$mura.meeting_id}</code></p>
         <h2>{$mura.meeting_name}</h2>
         <p>{$mura.meeting_desc}</p>
         <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hour Long</p>
+        <hr>
       </div>
       <div class="suggested-time">
         <h3>Mura Suggested Time</h3>
@@ -59,7 +57,7 @@
         font-size: 0.75rem;
         font-weight: bold;
         
-        margin: 0.5rem 0;
+        margin: 0.75rem 0;
         margin-top: 0;
         padding: 0.25rem 0.75rem;
         text-transform: uppercase;
@@ -68,6 +66,13 @@
       h2 {
         font-size: 2rem;
         margin: 0;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid #011627;
+        max-width: 150px;
+        margin-top: 2rem;
       }
 
       .suggested-time {
