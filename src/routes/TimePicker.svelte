@@ -5,7 +5,7 @@
   export let date: string;
 
   $: from = new Date(mura.time_from).getUTCHours();
-  $: to = new Date(mura.time_to).getUTCHours() - from;
+  $: to = new Date(mura.time_to).getUTCHours() - from < 0 ? 24 + new Date(mura.time_to).getUTCHours() - from : new Date(mura.time_to).getUTCHours() - from;
 
   // Generate a normalized value from 0 to 5 for availability
   // based on participant availability and total participants

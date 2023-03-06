@@ -33,15 +33,15 @@ export const mura = writable<Mura>({
   type: "one-time",
   date_from: "2023-03-06T00:00:00.000Z",
   date_to: "2023-03-12T00:00:00.000Z",
-  time_from: "2023-01-01T09:00:00.000Z",
-  time_to: "2023-01-01T23:00:00.000Z",
+  time_from: "2023-01-01T15:00:00.000Z",
+  time_to: "2023-01-02T03:00:00.000Z",
   participants: [
     {
       name: "Ivy",
       availability: [
         {
           date: "2023-03-06T00:00:00.000Z",
-          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21]
+          times: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 23, 24, 25, 26]
         },
         {
           date: "2023-03-07T00:00:00.000Z",
@@ -49,7 +49,7 @@ export const mura = writable<Mura>({
         },
         {
           date: "2023-03-10T00:00:00.000Z",
-          times: [17]
+          times: [17, 18, 19, 20]
         },
       ]
     },

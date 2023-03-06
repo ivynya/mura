@@ -55,7 +55,7 @@
 
     display: flex;
     flex-direction: column;
-    flex: 1 1;
+    flex: 1.25 1;
     margin-left: 2.5rem;
     margin-right: 1.5rem;
 
