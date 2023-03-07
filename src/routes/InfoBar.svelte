@@ -3,6 +3,7 @@
 	import InfoNav from "./InfoNav.svelte";
   import type { Mura } from "../lib/mura";
 	import InfoLogin from "./InfoLogin.svelte";
+	import InfoParticipants from "./InfoParticipants.svelte";
 
   export let mura: Mura;
   let activePage: "meeting" | "participants" | "help" = "meeting";
@@ -15,25 +16,7 @@
   <InfoLogin bind:mura />
   {/if}
   {#if activePage === "participants"}
-  <section class="participants">
-    <h3>Participants</h3>
-    <div>
-      <div>
-        <h4>Available</h4>
-        <p>John</p>
-        <p>Paul</p>
-        <p>George</p>
-        <p>Ringo</p>
-      </div>
-      <div>
-        <h4>Unavailable</h4>
-        <p>John</p>
-        <p>Paul</p>
-        <p>George</p>
-        <p>Ringo</p>
-      </div>
-    </div>
-  </section>
+  <InfoParticipants bind:mura />
   {/if}
   {#if activePage === "help"}
   <section class="suggested-time">
@@ -78,31 +61,6 @@
       margin-top: 0;
       padding: 0.25rem 0.75rem;
       text-transform: uppercase;
-    }
-
-    .participants {
-      > div {
-        display: flex;
-        flex: 1 1;
-
-        > div {
-          flex: 1 1;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          column-gap: 1rem;
-          row-gap: 0.25rem;
-
-          h4 {
-            margin: 0;
-          }
-
-          p {
-            font-size: 0.8rem;
-            margin: 0;
-          }
-        }
-      }
     }
 
     > :global(section) {
