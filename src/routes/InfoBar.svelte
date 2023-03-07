@@ -21,7 +21,6 @@
       <button>Continue</button>
     </div>
   </div>
-  <span class="spacer"></span>
   {/if}
   {#if activePage === "participants"}
   <span class="spacer"></span>
@@ -44,7 +43,6 @@
       </div>
     </div>
   </div>
-  <span class="spacer"></span>
   {/if}
   {#if activePage === "help"}
   <span class="spacer"></span>
@@ -53,9 +51,8 @@
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
     <p>25 Participants • Includes You</p>
   </div>
-  <span class="spacer"></span>
   {/if}
-  <span class="spacer"></span>
+  <span class="spacer lg"></span>
   <InfoNav bind:activePage />
 </div>
 
@@ -69,8 +66,14 @@
     flex-direction: column;
 
     flex: 1 1;
-    padding: 3rem;
+    padding: 6vh 3rem;
     text-align: center;
+
+    transition-duration: 0.5s;
+
+    @media (min-height: 992px) {
+      padding: 12vh 3rem;
+    }
 
     :global(.tag) {
       background: #011627;
@@ -177,6 +180,9 @@
 
     .spacer {
       flex: 1 1;
+    }
+    .spacer.lg {
+      flex: 2 1;
     }
   }
 </style>

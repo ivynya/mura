@@ -21,11 +21,12 @@
 
 <style lang="scss">
   #canvas3d {
-    max-width: 250px;
-    max-height: 250px;
-    margin: -2.5rem;
+    max-width: 180px;
+    max-height: 180px;
+    margin: -1.5rem;
+    margin-top: -3rem;
 
-    @media (max-height: 992px) {
+    @media (max-height: 768px) {
       display: none;
     }
   }
