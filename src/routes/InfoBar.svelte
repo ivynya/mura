@@ -1,22 +1,30 @@
 <script lang="ts">
+	import InfoHeader from "./InfoHeader.svelte";
+	import InfoNav from "./InfoNav.svelte";
   import type { Mura } from "../lib/mura";
 
   export let mura: Mura;
 </script>
 
 <div class="info-bar">
-  <div>
-    <p class="tag"><code>Currently Scheduling #{mura.meeting_id}</code></p>
-    <h2>{mura.meeting_name}</h2>
-    <p>{mura.meeting_desc}</p>
-    <p>Hosted by <b>{mura.meeting_host}</b> • {mura.meeting_length} Hour Long</p>
-    <hr>
+  <InfoHeader {mura} />
+  <br><br>
+  <div class="login">
+    <h3>Add Availability</h3>
+    <label for="name">
+      <span>Your Name</span>
+      <input id="name" type="text" placeholder="Public Nickname">
+    </label>
+    <button>Continue</button>
   </div>
+  <span class="spacer"></span>
   <div class="suggested-time">
     <h3>Mura Suggested Time</h3>
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
-    <p>25 People • Includes You</p>
+    <p>25 Participants • Includes You</p>
   </div>
+  <br>
+  <InfoNav />
 </div>
 
 <style lang="scss">
@@ -25,14 +33,14 @@
     border-top-left-radius: 1rem;
     box-sizing: border-box;
     color: #011627;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
 
     flex: 1 1;
-    padding: 1rem 3rem;
+    padding: 3rem;
     text-align: center;
 
-    .tag {
+    :global(.tag) {
       background: #011627;
       border-radius: 0.5rem;
       color: #2EC4B6;
@@ -47,31 +55,66 @@
       text-transform: uppercase;
     }
 
-    h2 {
-      font-size: 2rem;
-      margin: 0;
+    .login {
+      label {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        
+        span {
+          font-size: 0.8rem;
+          margin-bottom: 0.25rem;
+        }
+      }
+
+      input, button {
+        background-color: transparent;
+        border: 2px solid #011627;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        font-family: inherit;
+
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        width: 100%;
+      }
+
+      input:focus {
+        border-color: #2EC4B6;
+        outline: none;
+      }
+
+      button:hover {
+        cursor: pointer;
+        background-color: #011627;
+        color: #f5fff1;
+        transition-duration: 0.2s;
+      }
     }
 
-    hr {
-      border: 0;
-      border-top: 1px solid #011627;
-      max-width: 150px;
-      margin-top: 2rem;
-    }
-
-    .suggested-time {
+    .suggested-time, .login {
       border: 1px solid #011627;
       border-radius: 0.5rem;
+      margin: 0 auto;
       padding: 1.5rem 2rem;
+      max-width: 320px;
+      width: 100%;
 
       h3 {
         background-color: #f5fff1;
+        margin: 1rem auto;
         margin-top: -2.5rem;
+        width: fit-content;
+        padding: 0 1rem;
       }
 
       p {
         margin-bottom: 0;
       }
+    }
+
+    .spacer {
+      flex: 1 1;
     }
   }
 </style>

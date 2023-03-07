@@ -125,6 +125,7 @@
     </svg>
     <span>MURA</span>
   </h1>
+  <code>mura.ivy.direct/xyzi</code>
   <div>
     <button on:click={share}>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
@@ -186,7 +187,7 @@
       }
 
       &:hover {
-        background: #f5fff133;
+        color: #2EC4B6;
       }
     }
 	}

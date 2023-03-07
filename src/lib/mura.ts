@@ -25,7 +25,7 @@ export interface Mura {
 
 export const mura = writable<Mura>({
   meeting_name: "Study Session Meetup",
-  meeting_desc: "Study session for the upcoming CALC 1D exam",
+  meeting_desc: "A study session for the CALC 1D exam",
   meeting_id: "XYZI",
   meeting_host: "Ivy",
   meeting_length: 1,
