@@ -2,6 +2,7 @@
 	import InfoHeader from "./InfoHeader.svelte";
 	import InfoNav from "./InfoNav.svelte";
   import type { Mura } from "../lib/mura";
+	import InfoLogin from "./InfoLogin.svelte";
 
   export let mura: Mura;
   let activePage: "meeting" | "participants" | "help" = "meeting";
@@ -11,19 +12,10 @@
   <InfoHeader {mura} />
   <span class="spacer" />
   {#if activePage === "meeting"}
-  <div class="login">
-    <h3>Add Availability</h3>
-    <div>
-      <label for="name">
-        <span>Your Name</span>
-        <input id="name" type="text" placeholder="Public Nickname">
-      </label>
-      <button>Continue</button>
-    </div>
-  </div>
+  <InfoLogin bind:mura />
   {/if}
   {#if activePage === "participants"}
-  <div class="participants">
+  <section class="participants">
     <h3>Participants</h3>
     <div>
       <div>
@@ -41,14 +33,14 @@
         <p>Ringo</p>
       </div>
     </div>
-  </div>
+  </section>
   {/if}
   {#if activePage === "help"}
-  <div class="suggested-time">
+  <section class="suggested-time">
     <h3>Mura Suggested Time</h3>
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
     <p>25 Participants • Includes You</p>
-  </div>
+  </section>
   {/if}
   <span class="spacer lg"></span>
   <InfoNav bind:activePage />
@@ -88,49 +80,6 @@
       text-transform: uppercase;
     }
 
-    .login {
-      > div {
-        display: flex;
-        align-items: flex-end;
-        column-gap: 5px;
-        width: 100%;
-      }
-
-      label {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        
-        span {
-          font-size: 0.8rem;
-          margin-bottom: 0.25rem;
-        }
-      }
-
-      input, button {
-        background-color: transparent;
-        border: 2px solid #011627;
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-        font-family: inherit;
-
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
-      }
-
-      input:focus {
-        border-color: #2EC4B6;
-        outline: none;
-      }
-
-      button:hover {
-        cursor: pointer;
-        background-color: #011627;
-        color: #f5fff1;
-        transition-duration: 0.2s;
-      }
-    }
-
     .participants {
       > div {
         display: flex;
@@ -149,31 +98,31 @@
           }
 
           p {
+            font-size: 0.8rem;
             margin: 0;
           }
         }
       }
     }
 
-    .suggested-time, .login, .participants {
+    > :global(section) {
       border: 1px solid #011627;
       border-radius: 0.5rem;
       margin: 0 auto;
       padding: 1.5rem 2rem;
       max-width: 320px;
       width: 100%;
+    }
+    > :global(section h3) {
+      background-color: #f5fff1;
+      margin: 1rem auto;
+      margin-top: -2.5rem;
+      width: fit-content;
+      padding: 0 1rem;
+    }
 
-      h3 {
-        background-color: #f5fff1;
-        margin: 1rem auto;
-        margin-top: -2.5rem;
-        width: fit-content;
-        padding: 0 1rem;
-      }
-
-      p {
-        margin-bottom: 0;
-      }
+    p {
+      margin-bottom: 0;
     }
 
     .spacer {

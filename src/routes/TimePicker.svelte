@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Mura } from "../lib/mura";
+	import { type Mura, user } from "../lib/mura";
 
   export let mura: Mura;
   export let date: string;
@@ -14,6 +14,7 @@
     const availability = mura.participants.map(p => p.availability);
     const available = availability
       .filter(a => a.some(d => d.date === date && d.times.some(t => t === hour)))
+
     return ((available.length / participantCount) * 5).toFixed(0);
   }
 
@@ -29,7 +30,8 @@
 
 <div class="picker">
   {#each Array(to + 1) as _, i}
-    <button class="heatmap-{calculateHeatmapNormal(i + from)}">
+    <button class="heatmap-{calculateHeatmapNormal(i + from)}"
+      class:userSelected={$user.availability.some(d => d.date === date && d.times.some(t => t === i + from))}>
       {localizeHour(i) % 12 + 1}<br>
       <span>{#if localizeHour(i) < 11}AM{:else}PM{/if}</span>
     </button>
@@ -87,7 +89,7 @@
       opacity: 1;
     }
 
-    > button::after {
+    > button::after, > button::before {
       background: none;
       content: "";
       cursor: pointer;
@@ -98,10 +100,32 @@
       right: 0;
       bottom: 0;
       transition-duration: 0.25s;
+      z-index: 5;
     }
 
     > button:hover::after {
-      background: #2EC4B655;
+      background: #b5d84177;
+    }
+
+    > button.userSelected:hover::after {
+      background: #D1495Baa;
+    }
+
+    > button.userSelected::before {
+      background-color: #b5d841;
+      border-radius: 50%;
+      top: 65%;
+      margin: auto;
+      height: 15px;
+      width: 15px;
+    }
+
+    > button.userSelected + button.userSelected::before {
+      border-radius: 0.5rem;
+      left: -2rem;
+      margin: auto 0;
+      width: 60px;
+      z-index: 1;
     }
   }
 </style>

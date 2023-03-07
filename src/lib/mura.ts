@@ -14,14 +14,21 @@ export interface Mura {
   time_from: string;
   time_to: string;
 
-  participants: {
-    name: string;
-    availability: {
-      date: string;
-      times: number[];
-    }[];
-  }[];
+  participants: Participant[];
 }
+
+export interface Participant {
+  name: string;
+  availability: {
+    date: string;
+    times: number[];
+  }[];
+};
+
+export const user = writable<Participant>({
+  name: "",
+  availability: []
+});
 
 export const mura = writable<Mura>({
   meeting_name: "Study Session Meetup",
