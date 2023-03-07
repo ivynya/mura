@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TimePicker from "./TimePicker.svelte";
-	import type { Mura } from "../lib/mura";
+	import { type Mura, user } from "../lib/mura";
   
   export let mura: Mura;
 
@@ -33,7 +33,7 @@
   }
 </script>
 
-<div class="picker">
+<div class="picker" class:authed={$user.name}>
   {#each Array(to + 1) as _, i}
     <div class="day">
       <div class="day-number">
@@ -58,6 +58,11 @@
     flex: 1.25 1;
     margin-left: 2.5rem;
     margin-right: 1.5rem;
+
+    pointer-events: none;
+    &.authed {
+      pointer-events: all;
+    }
 
     .day {
       display: flex;

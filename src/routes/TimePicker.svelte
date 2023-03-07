@@ -26,11 +26,33 @@
     utc.setUTCHours(hour);
     return utc.getHours();
   }
+
+  // TODO: Move this into a service
+  let refresh = 0;
+  function toggleAvailability(hour: number,) {
+    const existing = $user.availability.find(d => d.date === date);
+
+    if (existing) {
+      const index = existing.times.indexOf(hour);
+      if (index > -1) {
+        existing.times.splice(index, 1);
+      } else {
+        existing.times.push(hour);
+      }
+    } else {
+      $user.availability.push({
+        date,
+        times: [hour]
+      });
+    }
+    refresh++;
+  }
 </script>
 
 <div class="picker">
-  {#each Array(to + 1) as _, i}
-    <button class="heatmap-{calculateHeatmapNormal(i + from)}"
+  {#each Array(to + 1) as _, i (refresh*24 + i)}
+    <button on:click={() => toggleAvailability(i + from)}
+      class="heatmap-{calculateHeatmapNormal(i + from)}"
       class:userSelected={$user.availability.some(d => d.date === date && d.times.some(t => t === i + from))}>
       {localizeHour(i) % 12 + 1}<br>
       <span>{#if localizeHour(i) < 11}AM{:else}PM{/if}</span>
