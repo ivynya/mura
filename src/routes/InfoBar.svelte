@@ -4,18 +4,22 @@
   import type { Mura } from "../lib/mura";
 
   export let mura: Mura;
+  let activePage: "meeting" | "participants" | "help" = "meeting";
 </script>
 
 <div class="info-bar">
   <InfoHeader {mura} />
-  <br><br>
+  <br>
+  {#if activePage === "meeting"}
   <div class="login">
     <h3>Add Availability</h3>
-    <label for="name">
-      <span>Your Name</span>
-      <input id="name" type="text" placeholder="Public Nickname">
-    </label>
-    <button>Continue</button>
+    <div>
+      <label for="name">
+        <span>Your Name</span>
+        <input id="name" type="text" placeholder="Public Nickname">
+      </label>
+      <button>Continue</button>
+    </div>
   </div>
   <span class="spacer"></span>
   <div class="suggested-time">
@@ -23,8 +27,13 @@
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
     <p>25 Participants • Includes You</p>
   </div>
-  <br>
-  <InfoNav />
+  {/if}
+  {#if activePage === "participants"}
+  {/if}
+  {#if activePage === "help"}
+  {/if}
+  <span class="spacer"></span>
+  <InfoNav bind:activePage />
 </div>
 
 <style lang="scss">
@@ -56,6 +65,13 @@
     }
 
     .login {
+      > div {
+        display: flex;
+        align-items: flex-end;
+        column-gap: 5px;
+        width: 100%;
+      }
+
       label {
         display: flex;
         flex-direction: column;
@@ -76,7 +92,6 @@
 
         margin-bottom: 1rem;
         padding: 0.5rem 1rem;
-        width: 100%;
       }
 
       input:focus {

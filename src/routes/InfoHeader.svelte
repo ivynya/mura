@@ -40,7 +40,7 @@
     hr {
       border: 0;
       border-top: 1px solid #011627;
-      max-width: 150px;
+      max-width: 100px;
       margin-top: 1rem;
       flex: 1 1;
       width: 100%;
