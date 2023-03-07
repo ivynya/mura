@@ -5,13 +5,7 @@
 </script>
 
 <div class="info">
-  <canvas id="canvas3d"></canvas>
-  <script type="module">
-    import { Application } from './runtime.js';
-    const canvas = document.getElementById('canvas3d');
-    const app = new Application(canvas);
-    app.load('./scene.splinecode');
-  </script>
+  <img src="./plant.png" alt="Plant Icon">
   <p class="tag"><code>Currently Scheduling</code></p>
   <h2>{mura.meeting_name}</h2>
   <p>{mura.meeting_desc}</p>
@@ -20,11 +14,9 @@
 </div>
 
 <style lang="scss">
-  #canvas3d {
-    max-width: 180px;
-    max-height: 180px;
-    margin: -1.5rem;
-    margin-top: -3rem;
+  img {
+    max-width: 100px;
+    max-height: 100px;
 
     @media (max-height: 768px) {
       display: none;
