@@ -9,8 +9,8 @@
 
 <div class="info-bar">
   <InfoHeader {mura} />
-  <br>
   {#if activePage === "meeting"}
+  <span class="spacer"></span>
   <div class="login">
     <h3>Add Availability</h3>
     <div>
@@ -22,15 +22,38 @@
     </div>
   </div>
   <span class="spacer"></span>
+  {/if}
+  {#if activePage === "participants"}
+  <span class="spacer"></span>
+  <div class="participants">
+    <h3>Participants</h3>
+    <div>
+      <div>
+        <h4>Available</h4>
+        <p>John</p>
+        <p>Paul</p>
+        <p>George</p>
+        <p>Ringo</p>
+      </div>
+      <div>
+        <h4>Unavailable</h4>
+        <p>John</p>
+        <p>Paul</p>
+        <p>George</p>
+        <p>Ringo</p>
+      </div>
+    </div>
+  </div>
+  <span class="spacer"></span>
+  {/if}
+  {#if activePage === "help"}
+  <span class="spacer"></span>
   <div class="suggested-time">
     <h3>Mura Suggested Time</h3>
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
     <p>25 Participants • Includes You</p>
   </div>
-  {/if}
-  {#if activePage === "participants"}
-  {/if}
-  {#if activePage === "help"}
+  <span class="spacer"></span>
   {/if}
   <span class="spacer"></span>
   <InfoNav bind:activePage />
@@ -107,7 +130,31 @@
       }
     }
 
-    .suggested-time, .login {
+    .participants {
+      > div {
+        display: flex;
+        flex: 1 1;
+
+        > div {
+          flex: 1 1;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          column-gap: 1rem;
+          row-gap: 0.25rem;
+
+          h4 {
+            margin: 0;
+          }
+
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .suggested-time, .login, .participants {
       border: 1px solid #011627;
       border-radius: 0.5rem;
       margin: 0 auto;

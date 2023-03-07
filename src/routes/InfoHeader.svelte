@@ -20,10 +20,14 @@
 </div>
 
 <style lang="scss">
-  canvas {
+  #canvas3d {
     max-width: 250px;
     max-height: 250px;
     margin: -2.5rem;
+
+    @media (max-height: 992px) {
+      display: none;
+    }
   }
 
   .info {
@@ -34,6 +38,7 @@
 
     h2 {
       font-size: 2rem;
+      margin-top: 0.5rem;
       margin-bottom: 0;
     }
 
