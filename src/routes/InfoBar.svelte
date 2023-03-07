@@ -9,8 +9,8 @@
 
 <div class="info-bar">
   <InfoHeader {mura} />
+  <span class="spacer" />
   {#if activePage === "meeting"}
-  <span class="spacer"></span>
   <div class="login">
     <h3>Add Availability</h3>
     <div>
@@ -23,7 +23,6 @@
   </div>
   {/if}
   {#if activePage === "participants"}
-  <span class="spacer"></span>
   <div class="participants">
     <h3>Participants</h3>
     <div>
@@ -45,7 +44,6 @@
   </div>
   {/if}
   {#if activePage === "help"}
-  <span class="spacer"></span>
   <div class="suggested-time">
     <h3>Mura Suggested Time</h3>
     <p class="tag"><b>May 5th at 3:00 PT</b></p>
