@@ -1,24 +1,22 @@
 <script lang="ts">
-  import { user, type Mura } from "../lib/mura";
-
-  export let mura: Mura;
+  import { user, mura } from "../lib/mura";
 
   let username: string = "";
   function login(e: Event) {
     e.preventDefault();
     $user.name = username;
 
-    const existing = mura.participants.find((p) => p.name === $user.name);
+    const existing = $mura.participants.find((p) => p.name === $user.name);
     if (existing) {
       $user.availability = existing.availability;
       return;
     }
     
-    const from = new Date(mura.date_from).getDate();
-    const to = new Date(mura.date_to).getDate() - from;
+    const from = new Date($mura.date_from).getDate();
+    const to = new Date($mura.date_to).getDate() - from;
 
     for (let i = 0; i < to + 1; i++) {
-      const date = new Date(mura.date_from);
+      const date = new Date($mura.date_from);
       date.setDate(date.getDate() + i);
       $user.availability.push({
         date: date.toISOString(),

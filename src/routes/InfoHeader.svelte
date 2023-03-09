@@ -1,15 +1,13 @@
 <script lang="ts">
-  import type { Mura } from "../lib/mura";
-
-  export let mura: Mura;
+  import { mura } from "../lib/mura";
 </script>
 
 <div class="info">
   <img src="./plant.png" alt="Plant Icon">
   <p class="tag"><code>Currently Scheduling</code></p>
-  <h2>{mura.meeting_name}</h2>
-  <p>{mura.meeting_desc}</p>
-  <p>Hosted by <b>{mura.meeting_host}</b> • {mura.meeting_length} Hour Long</p>
+  <h2>{$mura.meeting_name}</h2>
+  <p>{$mura.meeting_desc}</p>
+  <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hour Long</p>
   <hr>
 </div>
 

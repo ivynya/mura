@@ -1,7 +1,5 @@
 <script lang="ts">
-  import type { Mura } from "../lib/mura";
-
-  export let mura: Mura;
+  import { mura } from "../lib/mura";
 
   let highlighting = false;
 </script>
@@ -25,7 +23,7 @@
       <p>Ringo</p>
     </div>
     {:else}
-    {#each mura.participants as participant}
+    {#each $mura.participants as participant}
     <p class="participant">{participant.name}</p>
     {/each}
     {/if}

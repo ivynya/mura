@@ -2,14 +2,16 @@
 	import Header from "./Header.svelte";
 	import InfoBar from "./InfoBar.svelte";
 	import Picker from "./Picker.svelte";
-  import { mura } from "../lib/mura";
+  import { mura, user } from "../lib/mura";
+
+	$: $mura.participants[$mura.participants.findIndex(u => u.name === $user.name)] = $user;
 </script>
 
 <div class="app">
   <Header />
 	<main>
     <Picker />
-    <InfoBar bind:mura={$mura} />
+    <InfoBar />
 	</main>
 </div>
 

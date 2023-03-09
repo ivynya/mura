@@ -1,22 +1,21 @@
 <script lang="ts">
 	import InfoHeader from "./InfoHeader.svelte";
 	import InfoNav from "./InfoNav.svelte";
-  import type { Mura } from "../lib/mura";
 	import InfoLogin from "./InfoLogin.svelte";
 	import InfoParticipants from "./InfoParticipants.svelte";
+  import { mura } from "../lib/mura";
 
-  export let mura: Mura;
   let activePage: "meeting" | "participants" | "help" = "meeting";
 </script>
 
 <div class="info-bar">
-  <InfoHeader {mura} />
+  <InfoHeader />
   <span class="spacer" />
   {#if activePage === "meeting"}
-  <InfoLogin bind:mura />
+  <InfoLogin />
   {/if}
   {#if activePage === "participants"}
-  <InfoParticipants bind:mura />
+  <InfoParticipants />
   {/if}
   {#if activePage === "help"}
   <section class="suggested-time">
