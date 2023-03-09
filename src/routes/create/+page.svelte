@@ -18,7 +18,29 @@
     participants: [],
   };
 
-  onMount(async () => {
+  let inputTimeFrom: number = 8;
+  let inputTimeTo: number = 13;
+  let tzOffset: number = parseInt((new Date().getTimezoneOffset() / 60).toFixed(0));
+
+  $: cMura.time_from = (() => {
+    const days = Math.floor((inputTimeFrom + tzOffset) / 24);
+    const hrs = (inputTimeFrom + tzOffset) % 24;
+    const date = new Date("2021-01-01T00:00:00.000Z");
+    date.setUTCDate(1 + days);
+    date.setUTCHours(hrs);
+    return date.toISOString();
+  })();
+
+  $: cMura.time_to = (() => {
+    const days = Math.floor((inputTimeFrom + tzOffset) / 24);
+    const hrs = (inputTimeTo + tzOffset) % 24;
+    const date = new Date("2021-01-01T00:00:00.000Z");
+    date.setUTCDate(1 + days);
+    date.setUTCHours(hrs);
+    return date.toISOString();
+  })();
+
+  async function generateMeetingCode() {
     do {
       let code = "";
       const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -29,6 +51,10 @@
       if (!(await validateMuraID(code))) continue;
       else cMura.meeting_id = code;
     } while (cMura.meeting_id === "");
+  }
+
+  onMount(async () => {
+    await generateMeetingCode();
 
     const startDate = new Date();
     startDate.setUTCHours(0);
@@ -40,9 +66,10 @@
     cMura.date_to = startDate.toISOString();
   });
 
-  function submit(e: Event) {
+  async function submit(e: Event) {
     e.preventDefault();
-    createMura(cMura);
+    await createMura(cMura);
+		window.location.href = `/${cMura.meeting_id}`;
   }
 </script>
 
@@ -52,6 +79,7 @@
   <label for="meeting_id">
     Meeting ID
     <input required readonly type="text" id="meeting_id" bind:value={cMura.meeting_id}>
+    <button type="button" class="regen" on:click={generateMeetingCode}>Regenerate Meeting ID</button>
   </label>
   <label for="meeting_name">
     Meeting Name
@@ -86,11 +114,18 @@
   </label>
   <label for="time_from">
     First Schedulable Time (Time From)
-    <input required type="string" id="time_from" bind:value={cMura.time_from}>
+    <input required type="range" id="time_from" min="1" max={inputTimeTo - 1} bind:value={inputTimeFrom}>
+    <span>{inputTimeFrom}:00</span>
   </label>
   <label for="time_to">
     Last Schedulable Time (Time To)
-    <input required type="string" id="time_to" bind:value={cMura.time_to}>
+    <input required type="range" id="time_to" min={inputTimeFrom + 1} max="23" bind:value={inputTimeTo}>
+    <span>{inputTimeTo}:00</span>
+  </label>
+  <label for="tz_offset">
+    Timezone Offset (From GMT)
+    <input required type="range" id="tz_offset" min="0" max="23" bind:value={tzOffset}>
+    <span>{tzOffset}:00</span>
   </label>
   <button type="submit">Create Mura</button>
   <br>
@@ -154,7 +189,7 @@
     }
 
     button {
-      background-color: #2EC4B6;
+      background-color: #011627;
       border: none;
       border-radius: 0.25rem;
       color: #f5fff1;
@@ -165,6 +200,13 @@
       margin-top: 1rem;
       padding: 0.5rem 1rem;
       text-transform: uppercase;
+    }
+
+    .regen {
+      font-size: 0.5rem;
+      margin-top: 0.25rem;
+      padding: 0.05rem 0.5rem;
+      width: fit-content;
     }
   }
 </style>

@@ -7,8 +7,8 @@
       navigator
         .share({
           title: "Schedule with Ivy on Mura",
-          text: "Schedule a meeting with Ivy on Mura",
-          url: "https://mura.ivy.direct/",
+          text: `Schedule for ${$mura.meeting_name} with ${$mura.meeting_host}`,
+          url: `https://mura.ivy.direct/${$mura.meeting_id}`,
         })
         .then(() => console.log("Successful share"))
         .catch((error) => console.log("Error sharing", error));
@@ -123,11 +123,11 @@
     </svg>
     <span>MURA</span>
   </h1>
-  {#if $mura.meeting_id}
+  {#if $mura.meeting_id && $mura.meeting_id != 'XYZI'}
   <code>mura.ivy.direct/{$mura.meeting_id}</code>
   {/if}
   <div>
-    {#if $mura.meeting_id}
+    {#if $mura.meeting_id  && $mura.meeting_id != 'XYZI'}
     <button on:click={share}>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
