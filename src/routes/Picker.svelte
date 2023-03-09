@@ -1,11 +1,9 @@
 <script lang="ts">
 	import TimePicker from "./PickerDay.svelte";
-	import { type Mura, user } from "../lib/mura";
-  
-  export let mura: Mura;
+	import { mura, user } from "../lib/mura";
 
-  $: from = new Date(mura.date_from).getDate();
-  $: to = new Date(mura.date_to).getDate() - from;
+  $: from = new Date($mura.date_from).getDate();
+  $: to = new Date($mura.date_to).getDate() - from;
 
   function getDateOffset(date: Date, offset: number) {
     date.setDate(date.getDate() + offset);
@@ -89,8 +87,7 @@
         <span>{i + 1 + from}</span>
         <span>{getDateFromDay(new Date(), i)}</span>
       </div>
-      <TimePicker bind:mura={mura}
-        date={getDateOffset(new Date(mura.date_from), i).toISOString()}
+      <TimePicker
         row={i}
         del={isDelete}
         firstCorner={firstCorner}

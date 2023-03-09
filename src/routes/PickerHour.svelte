@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { type Mura, user } from "../lib/mura";
+	import { mura, user } from "../lib/mura";
 
-  export let mura: Mura;
-
-  export let date: string;
   export let hour: number;
   export let hourLocalized: number;
   export let row: number;
@@ -23,19 +20,15 @@
   const mouseEnter = () => dispatch("mouseenter", { row, hour });
   const mouseUp = () => dispatch("mouseup");
 
-  $: userAvailability = $user.availability.filter(d => d.date === date);
-  $: userTimes = userAvailability.map(d => d.times).flat();
-  $: userSelected = userTimes.some(t => t === hour);
+  // Determines if the user has selected this hour as available
+  $: userSelected = $user.availability[row]?.times.some(t => t === hour);
 
   // Generate a normalized value from 0 to 5 for availability
   // based on participant availability and total participants
-  $: participantCount = mura.participants.length;
+  export let pAvailability: number[][];
   function calculateHeatmapNormal(hour: number) {
-    const availability = mura.participants.map(p => p.availability);
-    const available = availability
-      .filter(a => a.some(d => d.date === date && d.times.some(t => t === hour)))
-
-    return ((available.length / participantCount) * 5).toFixed(0);
+    const available = pAvailability.flat().filter(t => t === hour);
+    return ((available.length / $mura.participants.length) * 5).toFixed(0);
   }
 </script>
 

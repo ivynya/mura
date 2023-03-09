@@ -1,17 +1,21 @@
 <script lang="ts">
-	import type { Mura } from "../lib/mura";
+	import { mura } from "../lib/mura";
 	import PickerHour from "./PickerHour.svelte";
-
-  export let mura: Mura;
-  export let date: string;
+  
   export let row: number;
 
   export let del: boolean;
   export let firstCorner: [number, number];
   export let secondCorner: [number, number];
 
-  $: from = new Date(mura.time_from).getUTCHours();
-  $: to = new Date(mura.time_to).getUTCHours() - from < 0 ? 24 + new Date(mura.time_to).getUTCHours() - from : new Date(mura.time_to).getUTCHours() - from;
+  $: from = new Date($mura.time_from).getUTCHours();
+  $: to = new Date($mura.time_to).getUTCHours() - from < 0 ? 24 + new Date($mura.time_to).getUTCHours() - from : new Date($mura.time_to).getUTCHours() - from;
+
+  // Maps participants into anonymized availability 2D array
+  // Formatted as number[][] for availability on this day
+  $: pAvailability = $mura.participants
+    .map(p => p.availability[row])
+    .map(d => d.times);
 
   // Converts a displayed hour index (i + from) in UTC to
   // local time zone hours, in 24 hour format (0-23)
@@ -28,14 +32,14 @@
 
 <div class="picker">
   {#each Array(to + 1) as _, i (refresh*24 + i)}
-    <PickerHour {mura}
-      {date}
+    <PickerHour
       {row}
       hour={i + from}
       hourLocalized={localizeHour(i)}
       {del}
       {firstCorner}
       {secondCorner}
+      {pAvailability}
       on:mousedown on:mouseenter on:mouseup />
   {/each}
 </div>

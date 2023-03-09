@@ -8,7 +8,7 @@
 <div class="app">
   <Header />
 	<main>
-    <Picker bind:mura={$mura} />
+    <Picker />
     <InfoBar bind:mura={$mura} />
 	</main>
 </div>
