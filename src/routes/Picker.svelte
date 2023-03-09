@@ -68,7 +68,13 @@
     }
   }
 
-  function mouseUp(e: CustomEvent) {
+  function mouseUp() {
+    for (let i = firstCorner[0]; i <= secondCorner[0]; i++) {
+      for (let j = firstCorner[1]; j <= secondCorner[1]; j++) {
+        // TODO: adjust availability
+      }
+    }
+
     isDragging = false;
     firstCorner = [-1, -1];
     secondCorner = [-1, -1];
