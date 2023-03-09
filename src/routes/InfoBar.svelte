@@ -3,9 +3,70 @@
 	import InfoNav from "./InfoNav.svelte";
 	import InfoLogin from "./InfoLogin.svelte";
 	import InfoParticipants from "./InfoParticipants.svelte";
-  import { mura } from "../lib/mura";
+	import { onMount } from "svelte";
+  import { mura, user } from "../lib/mura";
 
   let activePage: "meeting" | "participants" | "help" = "meeting";
+  let meetingTime = "";
+  let meetingParticipants = 0;
+  let meetingIncludesUser = false;
+
+  onMount(() => {
+    user.subscribe(() => {
+      const bestMeetingData = findBestMeetingTime();
+      meetingTime = bestMeetingData.date;
+      meetingParticipants = bestMeetingData.participants;
+      meetingIncludesUser = bestMeetingData.includesUser;
+    });
+  });
+
+  function findBestMeetingTime() {
+    const participants = $mura.participants;
+    const availability = participants.map((p) => p.availability).flat();
+    const dateMap: { [date: string]: { [hour: number]: number } } = {};
+    for (const a in availability) {
+      const date = availability[a].date;
+
+      for (const t in availability[a].times) {
+        const hour = availability[a].times[t];
+        if (dateMap[date]) {
+          if (dateMap[date][hour])
+            dateMap[date][hour] += 1;
+          else dateMap[date][hour] = 1;
+        } else {
+          dateMap[date] = {};
+          dateMap[date][hour] = 1;
+        }
+      }
+    }
+
+    console.log(dateMap)
+
+    let max = 0;
+    let maxDate = "";
+    let maxHour = 0;
+    for (const d in dateMap) {
+      for (const h in dateMap[d]) {
+        if (dateMap[d][h] > max) {
+          max = dateMap[d][h];
+          maxHour = parseInt(h);
+          maxDate = d;
+        }
+      }
+    }
+
+    const bestDate = new Date(maxDate);
+    bestDate.setUTCHours(maxHour + 1);
+
+    const includesUser = ($user.availability.map((d) => d.date).includes(maxDate)
+      && $user.availability.find((d) => d.date === maxDate)?.times.includes(maxHour)) || false;
+    
+    return {
+      date: bestDate.toLocaleString(),
+      participants: max,
+      includesUser: includesUser
+    }
+  }
 </script>
 
 <div class="info-bar">
@@ -20,8 +81,11 @@
   {#if activePage === "help"}
   <section class="suggested-time">
     <h3>Mura Suggested Time</h3>
-    <p class="tag"><b>May 5th at 3:00 PT</b></p>
-    <p>25 Participants • Includes You</p>
+    <p class="tag"><b>{meetingTime}</b></p>
+    <p>
+      <span>{meetingParticipants} Participants</span>
+      {#if meetingIncludesUser}<span> • Includes You</span>{/if}
+    </p>
   </section>
   {/if}
   <span class="spacer lg"></span>
