@@ -48,10 +48,9 @@
     flex: 1 1;
 
     :global(button.userSelected + button.userSelected::before) {
-      border-radius: 0.5rem;
-      left: -2rem;
+      left: -80%;
       margin: auto 0;
-      width: 60px;
+      width: 160%;
       z-index: 1;
     }
   }

@@ -103,11 +103,11 @@
 
   button::before {
     background-color: #b5d841;
-    border-radius: 50%;
+    border-radius: 0.5rem;
     top: 65%;
     margin: auto;
     height: 15px;
-    width: 15px;
+    width: 20%;
     opacity: 0;
   }
 
