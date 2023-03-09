@@ -26,7 +26,7 @@
   // Generate a normalized value from 0 to 5 for availability
   // based on participant availability and total participants
   export let pAvailability: number[];
-  $: heatmapNormal = ((pAvailability.filter(t => t === hour).length / $mura.participants.length) * 5).toFixed(0);
+  $: heatmapNormal = (((pAvailability.filter(t => t === hour).length / $mura.participants.length) * 5) || 0).toFixed(0);
 </script>
 
 <button
