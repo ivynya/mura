@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TimePicker from "./TimePicker.svelte";
+	import TimePicker from "./PickerDay.svelte";
 	import { type Mura, user } from "../lib/mura";
   
   export let mura: Mura;
@@ -41,7 +41,6 @@
     isDragging = true;
     isDelete = e.detail.del;
     firstCorner = pinCorner = [e.detail.row, e.detail.hour];
-    console.log(firstCorner);
   }
 
   function mouseEnter(e: CustomEvent) {
@@ -73,6 +72,7 @@
     isDragging = false;
     firstCorner = [-1, -1];
     secondCorner = [-1, -1];
+    pinCorner = [-1, -1];
   }
 </script>
 
