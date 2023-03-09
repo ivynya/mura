@@ -9,7 +9,7 @@
   </main>
 </div>
 
-<style lang="scss" global>
+<style lang="scss">
   :global(body) {
 		background: #011627;
 		color: #f5fff1;
