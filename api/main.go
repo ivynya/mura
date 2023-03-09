@@ -79,5 +79,22 @@ func main() {
 		return c.SendString(fmt.Sprintf("File %s created successfully", filename))
 	})
 
+	app.Get("/get/:id", func(c *fiber.Ctx) error {
+		filename := fmt.Sprintf("%s.json", c.Params("id"))
+		file, err := os.Open(filename)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		var mura Mura
+		err = json.NewDecoder(file).Decode(&mura)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(mura)
+	})
+
 	app.Listen(":3000")
 }
