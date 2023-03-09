@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TimePicker from "./PickerDay.svelte";
+	import PickerDay from "./PickerDay.svelte";
 	import { mura, user } from "../lib/mura";
 
   $: from = new Date($mura.date_from).getDate();
@@ -69,7 +69,18 @@
   function mouseUp() {
     for (let i = firstCorner[0]; i <= secondCorner[0]; i++) {
       for (let j = firstCorner[1]; j <= secondCorner[1]; j++) {
-        // TODO: adjust availability
+        console.log(i, j)
+        if (isDelete) {
+          $user.availability[i].times.splice($user.availability[i].times.findIndex(t => t === j), 1);
+          $user = $user;
+          $mura = $mura;
+        } 
+        else if (!$user.availability[i].times.includes(j)) {
+          $user.availability[i].times.push(j);
+          $user.availability[i].times.sort((a, b) => a - b);
+          $user = $user;
+          $mura = $mura;
+        }
       }
     }
 
@@ -87,7 +98,7 @@
         <span>{i + 1 + from}</span>
         <span>{getDateFromDay(new Date(), i)}</span>
       </div>
-      <TimePicker
+      <PickerDay
         row={i}
         del={isDelete}
         firstCorner={firstCorner}

@@ -25,18 +25,15 @@
 
   // Generate a normalized value from 0 to 5 for availability
   // based on participant availability and total participants
-  export let pAvailability: number[][];
-  function calculateHeatmapNormal(hour: number) {
-    const available = pAvailability.flat().filter(t => t === hour);
-    return ((available.length / $mura.participants.length) * 5).toFixed(0);
-  }
+  export let pAvailability: number[];
+  $: heatmapNormal = ((pAvailability.filter(t => t === hour).length / $mura.participants.length) * 5).toFixed(0);
 </script>
 
 <button
   on:mousedown={mouseDown}
   on:mouseenter={mouseEnter}
   on:mouseup={mouseUp}
-  class="heatmap-{calculateHeatmapNormal(hour)}"
+  class="heatmap-{heatmapNormal}"
   class:highlight
   class:userSelected>
   {hourLocalized % 12 + 1}<br>

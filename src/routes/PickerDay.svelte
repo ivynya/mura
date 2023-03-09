@@ -9,13 +9,14 @@
   export let secondCorner: [number, number];
 
   $: from = new Date($mura.time_from).getUTCHours();
-  $: to = new Date($mura.time_to).getUTCHours() - from < 0 ? 24 + new Date($mura.time_to).getUTCHours() - from : new Date($mura.time_to).getUTCHours() - from;
+  $: toHours = new Date($mura.time_to).getUTCHours();
+  $: to = toHours - from < 0 ? 24 + toHours - from : toHours - from;
 
   // Maps participants into anonymized availability 2D array
-  // Formatted as number[][] for availability on this day
+  // Formatted as flat number[] for availability on this day
   $: pAvailability = $mura.participants
     .map(p => p.availability[row])
-    .map(d => d.times);
+    .map(d => d.times).flat();
 
   // Converts a displayed hour index (i + from) in UTC to
   // local time zone hours, in 24 hour format (0-23)
@@ -25,13 +26,10 @@
     utc.setUTCHours(hour);
     return utc.getHours();
   }
-
-  // TODO: Move this into a service
-  let refresh = 0;
 </script>
 
 <div class="picker">
-  {#each Array(to + 1) as _, i (refresh*24 + i)}
+  {#each Array(to + 1) as _, i}
     <PickerHour
       {row}
       hour={i + from}
