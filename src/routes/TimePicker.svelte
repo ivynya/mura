@@ -1,8 +1,19 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
 	import { type Mura, user } from "../lib/mura";
+
+  const dispatch = createEventDispatcher();
+  const mouseDown = (hour: number, del = false) => dispatch("mousedown", { row, hour, del });
+  const mouseEnter = (hour: number) => dispatch("mouseenter", { row, hour });
+  const mouseUp = (hour: number) => dispatch("mouseup", { row, hour });
 
   export let mura: Mura;
   export let date: string;
+  export let row: number;
+
+  export let del: boolean;
+  export let firstCorner: [number, number];
+  export let secondCorner: [number, number];
 
   $: from = new Date(mura.time_from).getUTCHours();
   $: to = new Date(mura.time_to).getUTCHours() - from < 0 ? 24 + new Date(mura.time_to).getUTCHours() - from : new Date(mura.time_to).getUTCHours() - from;
@@ -29,7 +40,7 @@
 
   // TODO: Move this into a service
   let refresh = 0;
-  function toggleAvailability(hour: number,) {
+  function toggleAvailability(hour: number) {
     const existing = $user.availability.find(d => d.date === date);
 
     if (existing) {
@@ -52,10 +63,14 @@
 <div class="picker">
   {#each Array(to + 1) as _, i (refresh*24 + i)}
     <button on:click={() => toggleAvailability(i + from)}
+      on:mousedown={() => mouseDown(i + from, $user.availability.some(d => d.date === date && d.times.some(t => t === i + from)))}
+      on:mouseenter={() => mouseEnter(i + from)}
+      on:mouseup={() => mouseUp(i + from)}
       class="heatmap-{calculateHeatmapNormal(i + from)}"
+      class:highlight={(($user.availability.some(d => d.date === date && d.times.some(t => t === i + from)) && del) || (!$user.availability.some(d => d.date === date && d.times.some(t => t === i + from)) && !del)) && row >= firstCorner[0] && row <= secondCorner[0] && i + from >= firstCorner[1] && i + from <= secondCorner[1]}
       class:userSelected={$user.availability.some(d => d.date === date && d.times.some(t => t === i + from))}>
       {localizeHour(i) % 12 + 1}<br>
-      <span>{#if localizeHour(i) < 11}AM{:else}PM{/if}</span>
+      <span>{#if localizeHour(i) < 11}AM{:else}PM{/if}</span><br>
     </button>
   {/each}
 </div>
@@ -125,21 +140,26 @@
       z-index: 5;
     }
 
-    > button:hover::after {
-      background: #b5d84177;
-    }
-
-    > button.userSelected:hover::after {
-      background: #D1495Baa;
-    }
-
-    > button.userSelected::before {
+    > button::before {
       background-color: #b5d841;
       border-radius: 50%;
       top: 65%;
       margin: auto;
       height: 15px;
       width: 15px;
+      opacity: 0;
+    }
+
+    > button:hover::after, > button.highlight::after {
+      background: #b5d84177;
+    }
+
+    > button.userSelected:hover::after, > button.userSelected.highlight::after {
+      background: #D1495Baa;
+    }
+
+    > button.userSelected::before {
+      opacity: 1;
     }
 
     > button.userSelected + button.userSelected::before {

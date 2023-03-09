@@ -31,6 +31,49 @@
         return "Sat";
     }
   }
+
+  let isDragging = false;
+  let isDelete = false;
+  let firstCorner: [number, number] = [-1, -1];
+  let secondCorner: [number, number] = [-1, -1];
+  let pinCorner: [number, number] = [-1, -1];
+  function mouseDown(e: CustomEvent) {
+    isDragging = true;
+    isDelete = e.detail.del;
+    firstCorner = pinCorner = [e.detail.row, e.detail.hour];
+    console.log(firstCorner);
+  }
+
+  function mouseEnter(e: CustomEvent) {
+    if (isDragging) {
+      // Quarter 4
+      if (e.detail.row <= pinCorner[0] && e.detail.hour <= pinCorner[1]) {
+        firstCorner = [e.detail.row, e.detail.hour];
+        secondCorner = pinCorner;
+      }
+      // Quarter 2
+      else if (e.detail.row >= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
+        firstCorner = pinCorner;
+        secondCorner = [e.detail.row, e.detail.hour];
+      }
+      // Quarter 3
+      else if (e.detail.row > pinCorner[0] && e.detail.hour < pinCorner[1]) {
+        firstCorner = [pinCorner[0], e.detail.hour];
+        secondCorner = [e.detail.row, pinCorner[1]];
+      }
+      // Quarter 1
+      else if (e.detail.row <= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
+        firstCorner = [e.detail.row, pinCorner[1]];
+        secondCorner = [pinCorner[0], e.detail.hour];
+      }
+    }
+  }
+
+  function mouseUp(e: CustomEvent) {
+    isDragging = false;
+    firstCorner = [-1, -1];
+    secondCorner = [-1, -1];
+  }
 </script>
 
 <div class="picker" class:authed={$user.name}>
@@ -40,7 +83,15 @@
         <span>{i + 1 + from}</span>
         <span>{getDateFromDay(new Date(), i)}</span>
       </div>
-      <TimePicker bind:mura={mura} date={getDateOffset(new Date(mura.date_from), i).toISOString()} />
+      <TimePicker bind:mura={mura}
+        date={getDateOffset(new Date(mura.date_from), i).toISOString()}
+        row={i}
+        del={isDelete}
+        firstCorner={firstCorner}
+        secondCorner={secondCorner}
+        on:mousedown={mouseDown} 
+        on:mouseup={mouseUp}
+        on:mouseenter={mouseEnter} />
     </div>
   {/each}
 </div>
