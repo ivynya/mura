@@ -23,6 +23,9 @@
         times: []
       });
     }
+
+    $mura.participants.push($user);
+    $mura = $mura;
   }
 </script>
 
