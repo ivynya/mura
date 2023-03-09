@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PickerDay from "./PickerDay.svelte";
 	import { mura, user } from "../lib/mura";
+	import { updateMuraParticipant } from "$lib/api";
 
   $: from = new Date($mura.date_from).getDate();
   $: to = new Date($mura.date_to).getDate() - from;
@@ -79,6 +80,8 @@
 
     $user = $user;
     $mura = $mura;
+
+    updateMuraParticipant($mura.meeting_id, $user.name, $user);
   }
 </script>
 

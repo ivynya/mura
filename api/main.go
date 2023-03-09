@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 type Mura struct {
@@ -35,12 +36,9 @@ type Availability struct {
 func main() {
 	app := fiber.New()
 
-	app.Use(func(c *fiber.Ctx) error {
-		c.Set("Access-Control-Allow-Origin", "*")
-		c.Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-		c.Set("Access-Control-Allow-Headers", "Content-Type")
-		return c.Next()
-	})
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 
 	app.Get("/create/:id", func(c *fiber.Ctx) error {
 		_, err := os.Stat(fmt.Sprintf("%s.json", c.Params("id")))
@@ -94,6 +92,46 @@ func main() {
 		}
 
 		return c.JSON(mura)
+	})
+
+	app.Post("/update/:id/:participant", func(c *fiber.Ctx) error {
+		filename := fmt.Sprintf("%s.json", c.Params("id"))
+		file, err := os.Open(filename)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+
+		var mura Mura
+		err = json.NewDecoder(file).Decode(&mura)
+		if err != nil {
+			return err
+		}
+
+		var requestBody Mura
+
+		err = json.Unmarshal(c.Body(), &requestBody)
+		if err != nil {
+			return err
+		}
+
+		for i, participant := range mura.Participants {
+			if participant.Name == c.Params("participant") {
+				mura.Participants[i].Availability = requestBody.Participants[0].Availability
+			}
+		}
+
+		encoded, err := json.MarshalIndent(mura, "", "  ")
+		if err != nil {
+			return err
+		}
+
+		err = os.WriteFile(filename, encoded, 0644)
+		if err != nil {
+			return err
+		}
+
+		return c.SendString(fmt.Sprintf("File %s updated successfully", filename))
 	})
 
 	app.Listen(":3000")
