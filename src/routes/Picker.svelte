@@ -139,6 +139,11 @@
 
         font-size: 2rem;
 
+        @media (max-width: 992px) {
+          padding-left: 1.5rem;
+          padding-right: 1.25rem;
+        }
+
         :not(:first-child) {
           font-size: 0.75rem;
         }
