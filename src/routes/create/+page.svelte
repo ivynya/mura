@@ -29,6 +29,15 @@
       if (!(await validateMuraID(code))) continue;
       else cMura.meeting_id = code;
     } while (cMura.meeting_id === "");
+
+    const startDate = new Date();
+    startDate.setUTCHours(0);
+    startDate.setUTCMinutes(0);
+    startDate.setUTCSeconds(0);
+    startDate.setUTCMilliseconds(0);
+
+    cMura.date_from = startDate.toISOString();
+    cMura.date_to = startDate.toISOString();
   });
 
   function submit(e: Event) {
