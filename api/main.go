@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -29,8 +30,8 @@ type Participant struct {
 }
 
 type Availability struct {
-	Date  string   `json:"date"`
-	Times []string `json:"times"`
+	Date  string `json:"date"`
+	Times []int  `json:"times"`
 }
 
 func main() {
@@ -94,10 +95,11 @@ func main() {
 		return c.JSON(mura)
 	})
 
-	app.Post("/update/:id/:participant", func(c *fiber.Ctx) error {
+	app.Post("/create/:id/:participant", func(c *fiber.Ctx) error {
 		filename := fmt.Sprintf("%s.json", c.Params("id"))
 		file, err := os.Open(filename)
 		if err != nil {
+			log.Println("ERR: /create/:id/:participant @ os.Open")
 			return err
 		}
 		defer file.Close()
@@ -105,19 +107,60 @@ func main() {
 		var mura Mura
 		err = json.NewDecoder(file).Decode(&mura)
 		if err != nil {
+			log.Println("ERR: /create/:id/:participant @ json.NewDecoder")
 			return err
 		}
 
-		var requestBody Mura
+		var requestBody Participant
 
 		err = json.Unmarshal(c.Body(), &requestBody)
 		if err != nil {
+			log.Println("ERR: /create/:id/:participant @ json.Unmarshal")
+			return err
+		}
+
+		mura.Participants = append(mura.Participants, requestBody)
+
+		encoded, err := json.MarshalIndent(mura, "", "  ")
+		if err != nil {
+			return err
+		}
+
+		err = os.WriteFile(filename, encoded, 0644)
+		if err != nil {
+			return err
+		}
+
+		return c.SendString(fmt.Sprintf("File %s updated successfully", filename))
+	})
+
+	app.Post("/update/:id/:participant", func(c *fiber.Ctx) error {
+		filename := fmt.Sprintf("%s.json", c.Params("id"))
+		file, err := os.Open(filename)
+		if err != nil {
+			log.Println("ERR: /update/:id/:participant @ os.Open")
+			return err
+		}
+		defer file.Close()
+
+		var mura Mura
+		err = json.NewDecoder(file).Decode(&mura)
+		if err != nil {
+			log.Println("ERR: /update/:id/:participant @ json.NewDecoder")
+			return err
+		}
+
+		var requestBody Participant
+
+		err = json.Unmarshal(c.Body(), &requestBody)
+		if err != nil {
+			log.Println("ERR: /update/:id/:participant @ json.Unmarshal")
 			return err
 		}
 
 		for i, participant := range mura.Participants {
 			if participant.Name == c.Params("participant") {
-				mura.Participants[i].Availability = requestBody.Participants[0].Availability
+				mura.Participants[i].Availability = requestBody.Availability
 			}
 		}
 
