@@ -34,7 +34,7 @@
   function mouseDown(e: CustomEvent) {
     isDragging = true;
     isDelete = e.detail.del;
-    firstCorner = pinCorner = [e.detail.row, e.detail.hour];
+    firstCorner = secondCorner = pinCorner = [e.detail.row, e.detail.hour];
   }
 
   function mouseEnter(e: CustomEvent) {

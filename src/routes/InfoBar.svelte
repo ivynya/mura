@@ -40,8 +40,6 @@
       }
     }
 
-    console.log(dateMap)
-
     let max = 0;
     let maxDate = "";
     let maxHour = 0;
