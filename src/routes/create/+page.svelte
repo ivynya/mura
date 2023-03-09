@@ -131,7 +131,7 @@
       font-family: inherit;
       font-size: 0.8rem;
       margin-top: 0.15rem;
-      padding: 0.15rem 1rem;
+      padding: 0.15rem 0.5rem;
     }
 
     input:focus {
