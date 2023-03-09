@@ -7,7 +7,7 @@
   <p class="tag"><code>Currently Scheduling</code></p>
   <h2>{$mura.meeting_name}</h2>
   <p>{$mura.meeting_desc}</p>
-  <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hour Long</p>
+  <p>Hosted by <b>{$mura.meeting_host}</b> • {$mura.meeting_length} Hours Long</p>
   <hr>
 </div>
 

@@ -6,8 +6,9 @@
   "meeting_length": 5,
   "type": "one-time",
   "date_from": "2023-03-09T00:00:00.000Z",
-  "date_to": "2023-03-13T00:00:00.000Z",
-  "time_from": "2023-03-09T00:00:00.000Z",
-  "time_to": "2023-03-09T12:00:00.00Z",
-  "participants": []
+  "date_to": "2023-03-15T00:00:00.000Z",
+  "time_from": "2023-01-01T15:00:00.000Z",
+  "time_to": "2023-01-02T03:00:00.00Z",
+  "participants": [
+  ]
 }

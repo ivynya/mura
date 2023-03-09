@@ -15,7 +15,17 @@ export async function createMura(options: Mura) {
 }
 
 export async function getMura(id: string) {
-  return await fetch(`http://localhost:3000/get/${id}`);
+  const res = await fetch(`http://localhost:3000/get/${id}`);
+  return await res.json();
+}
+
+export async function createMuraParticipant(id: string, pID: string, p: Participant) {
+  return await fetch(`http://localhost:3000/create/${id}/${pID}`, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(p),
+  });
 }
 
 export async function updateMuraParticipant(id: string, pID: string, p: Participant) {
@@ -23,6 +33,6 @@ export async function updateMuraParticipant(id: string, pID: string, p: Particip
     method: 'POST',
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({participant: [p]}),
+    body: JSON.stringify(p),
   });
 }

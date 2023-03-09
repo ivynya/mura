@@ -7,6 +7,5 @@ export const ssr = false;
 // Get Mura JSON object and return it to page
 export const load = (async ({ params }) => {
 	const { id } = params;
-	const res = await getMura(id);
-	return { mura: await res.json() };
+	return { mura: await getMura(id) };
 }) satisfies PageLoad;

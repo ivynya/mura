@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { createMuraParticipant, getMura } from "$lib/api";
   import { user, mura } from "../lib/mura";
 
   let username: string = "";
-  function login(e: Event) {
+  async function login(e: Event) {
     e.preventDefault();
     $user.name = username;
 
     const existing = $mura.participants.find((p) => p.name === $user.name);
     if (existing) {
       $user.availability = existing.availability;
+      $mura = $mura;
       return;
     }
     
@@ -24,8 +26,9 @@
       });
     }
 
-    $mura.participants.push($user);
-    $mura = $mura;
+    await createMuraParticipant($mura.meeting_id, $user.name, $user)
+    $mura = await getMura($mura.meeting_id);
+    $user.availability = $mura.participants.find((p) => p.name === $user.name)!.availability;
   }
 </script>
 
