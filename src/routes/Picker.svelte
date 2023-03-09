@@ -5,11 +5,6 @@
   $: from = new Date($mura.date_from).getDate();
   $: to = new Date($mura.date_to).getDate() - from;
 
-  function getDateOffset(date: Date, offset: number) {
-    date.setDate(date.getDate() + offset);
-    return date;
-  }
-
   function getDateFromDay(from: Date, day: number) {
     from.setDate(from.getDate() + day);
     switch (from.getUTCDay()) {
@@ -35,6 +30,7 @@
   let firstCorner: [number, number] = [-1, -1];
   let secondCorner: [number, number] = [-1, -1];
   let pinCorner: [number, number] = [-1, -1];
+  
   function mouseDown(e: CustomEvent) {
     isDragging = true;
     isDelete = e.detail.del;
@@ -42,52 +38,47 @@
   }
 
   function mouseEnter(e: CustomEvent) {
-    if (isDragging) {
-      // Quarter 4
-      if (e.detail.row <= pinCorner[0] && e.detail.hour <= pinCorner[1]) {
-        firstCorner = [e.detail.row, e.detail.hour];
-        secondCorner = pinCorner;
-      }
-      // Quarter 2
-      else if (e.detail.row >= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
-        firstCorner = pinCorner;
-        secondCorner = [e.detail.row, e.detail.hour];
-      }
-      // Quarter 3
-      else if (e.detail.row > pinCorner[0] && e.detail.hour < pinCorner[1]) {
-        firstCorner = [pinCorner[0], e.detail.hour];
-        secondCorner = [e.detail.row, pinCorner[1]];
-      }
-      // Quarter 1
-      else if (e.detail.row <= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
-        firstCorner = [e.detail.row, pinCorner[1]];
-        secondCorner = [pinCorner[0], e.detail.hour];
-      }
+    if (!isDragging) return;
+
+    // Quarter 4
+    if (e.detail.row <= pinCorner[0] && e.detail.hour <= pinCorner[1]) {
+      firstCorner = [e.detail.row, e.detail.hour];
+      secondCorner = pinCorner;
+    }
+    // Quarter 2
+    else if (e.detail.row >= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
+      firstCorner = pinCorner;
+      secondCorner = [e.detail.row, e.detail.hour];
+    }
+    // Quarter 3
+    else if (e.detail.row > pinCorner[0] && e.detail.hour < pinCorner[1]) {
+      firstCorner = [pinCorner[0], e.detail.hour];
+      secondCorner = [e.detail.row, pinCorner[1]];
+    }
+    // Quarter 1
+    else if (e.detail.row <= pinCorner[0] && e.detail.hour >= pinCorner[1]) {
+      firstCorner = [e.detail.row, pinCorner[1]];
+      secondCorner = [pinCorner[0], e.detail.hour];
     }
   }
 
   function mouseUp() {
     for (let i = firstCorner[0]; i <= secondCorner[0]; i++) {
       for (let j = firstCorner[1]; j <= secondCorner[1]; j++) {
-        console.log(i, j)
-        if (isDelete) {
+        if (isDelete)
           $user.availability[i].times.splice($user.availability[i].times.findIndex(t => t === j), 1);
-          $user = $user;
-          $mura = $mura;
-        } 
         else if (!$user.availability[i].times.includes(j)) {
           $user.availability[i].times.push(j);
           $user.availability[i].times.sort((a, b) => a - b);
-          $user = $user;
-          $mura = $mura;
         }
       }
     }
 
-    isDragging = false;
-    firstCorner = [-1, -1];
-    secondCorner = [-1, -1];
-    pinCorner = [-1, -1];
+    isDragging = isDelete = false;
+    firstCorner = secondCorner = pinCorner = [-1, -1];
+
+    $user = $user;
+    $mura = $mura;
   }
 </script>
 
