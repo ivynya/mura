@@ -118,6 +118,8 @@
     margin-left: 2.5rem;
     margin-right: 1.5rem;
 
+    scroll-snap-align: start;
+
     pointer-events: none;
     &.authed {
       pointer-events: all;

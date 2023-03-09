@@ -102,6 +102,8 @@
     flex: 1 1;
     padding: 6vh 3rem;
     text-align: center;
+    
+    scroll-snap-align: start;
 
     transition-duration: 0.5s;
 

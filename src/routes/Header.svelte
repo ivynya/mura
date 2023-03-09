@@ -148,8 +148,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-		padding: 1rem 2rem;
-    padding-top: 0.25rem;
+		padding: 0.75rem 2rem;
+    padding-top: 0.5rem;
 
     svg {
       height: 75px;
@@ -194,6 +194,18 @@
     }
 
     @media (max-width: 768px) {
+      padding: 0.5rem 1rem;
+
+      svg {
+        height: 50px;
+        width: 50px;
+        margin-right: 10px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
       .share {
         display: none;
       }
