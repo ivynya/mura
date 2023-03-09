@@ -1,5 +1,13 @@
+<script lang="ts">
+	import Header from "./Header.svelte";
+</script>
 
-<slot></slot>
+<div class="app">
+  <Header />
+	<main>
+  <slot></slot>
+  </main>
+</div>
 
 <style lang="scss" global>
   :global(body) {
@@ -11,4 +19,15 @@
     margin: 0;
     padding: 0;
   }
+  
+	.app {
+		display: flex;
+		flex-direction: column;
+		height: 100vh;
+	}
+
+	main {
+		display: flex;
+		flex: 1 1;
+	}
 </style>
