@@ -7,8 +7,7 @@
   $: to = new Date($mura.date_to).getDate() - from;
 
   function getDateFromDay(from: Date, day: number) {
-    from.setDate(from.getDate() + day);
-    switch (from.getUTCDay()) {
+    switch ((new Date($mura.date_from).getUTCDay() + day) % 7) {
       case 0:
         return "Sun";
       case 1:
