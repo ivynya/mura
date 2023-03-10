@@ -1,0 +1,12 @@
+version: '3.7'
+
+vysc_project: mura
+vysc_nginx:
+  mura-api:
+    listen_host: io.ivy.direct
+    listen_path: /mura
+    proxy_port: 3000
+  mura:
+    listen_host: mura.ivy.direct
+    listen_path: /
+    proxy_port: 3000
