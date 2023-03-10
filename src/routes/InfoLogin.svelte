@@ -53,13 +53,13 @@
       display: flex;
       align-items: flex-end;
       column-gap: 5px;
-      width: 100%;
     }
 
     label {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      flex: 1 1;
       
       span {
         font-size: 0.8rem;
@@ -76,6 +76,11 @@
 
       margin-bottom: 1rem;
       padding: 0.5rem 1rem;
+      max-width: 160px;
+    }
+
+    button {
+      flex: 1 1;
     }
 
     input:focus {

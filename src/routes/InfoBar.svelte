@@ -102,7 +102,7 @@
     flex: 1 1;
     padding: 6vh 3rem;
     text-align: center;
-    
+
     scroll-snap-align: start;
 
     transition-duration: 0.5s;
@@ -129,6 +129,7 @@
     > :global(section) {
       border: 1px solid #011627;
       border-radius: 0.5rem;
+      box-sizing: border-box;
       margin: 0 auto;
       padding: 1.5rem 2rem;
       max-width: 320px;

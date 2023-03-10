@@ -141,6 +141,14 @@
 
         font-size: 2rem;
 
+        @media (max-height: 992px) {
+          font-size: 1.5rem;
+        }
+
+        @media (max-height: 768px) {
+          font-size: 1.25rem;
+        }
+
         @media (max-width: 992px) {
           padding-left: 1.5rem;
           padding-right: 1.25rem;
