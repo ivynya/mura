@@ -36,12 +36,13 @@ type Availability struct {
 
 func main() {
 	app := fiber.New()
+	api := app.Group("/mura")
 
-	app.Use(cors.New(cors.Config{
+	api.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 	}))
 
-	app.Get("/create/:id", func(c *fiber.Ctx) error {
+	api.Get("/create/:id", func(c *fiber.Ctx) error {
 		_, err := os.Stat(fmt.Sprintf("%s.json", c.Params("id")))
 		if os.IsNotExist(err) {
 			return c.SendStatus(200)
@@ -49,7 +50,7 @@ func main() {
 		return c.SendStatus(400)
 	})
 
-	app.Post("/create", func(c *fiber.Ctx) error {
+	api.Post("/create", func(c *fiber.Ctx) error {
 		var requestBody Mura
 
 		err := json.Unmarshal(c.Body(), &requestBody)
@@ -78,7 +79,7 @@ func main() {
 		return c.SendString(fmt.Sprintf("File %s created successfully", filename))
 	})
 
-	app.Get("/get/:id", func(c *fiber.Ctx) error {
+	api.Get("/get/:id", func(c *fiber.Ctx) error {
 		filename := fmt.Sprintf("%s.json", c.Params("id"))
 		file, err := os.Open(filename)
 		if err != nil {
@@ -95,7 +96,7 @@ func main() {
 		return c.JSON(mura)
 	})
 
-	app.Post("/create/:id/:participant", func(c *fiber.Ctx) error {
+	api.Post("/create/:id/:participant", func(c *fiber.Ctx) error {
 		filename := fmt.Sprintf("%s.json", c.Params("id"))
 		file, err := os.Open(filename)
 		if err != nil {
@@ -134,7 +135,7 @@ func main() {
 		return c.SendString(fmt.Sprintf("File %s updated successfully", filename))
 	})
 
-	app.Post("/update/:id/:participant", func(c *fiber.Ctx) error {
+	api.Post("/update/:id/:participant", func(c *fiber.Ctx) error {
 		filename := fmt.Sprintf("%s.json", c.Params("id"))
 		file, err := os.Open(filename)
 		if err != nil {
