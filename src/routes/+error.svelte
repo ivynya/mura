@@ -41,55 +41,8 @@
       margin: 0;
     }
 
-    label {
-      display: flex;
-      flex-direction: column;
-      font-size: 0.75rem;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    input, select {
-      appearance: none;
-      background-color: transparent;
-      border: 1px solid #011627;
-      border-radius: 0.25rem;
-      box-sizing: border-box;
-      font-family: inherit;
-      font-size: 0.8rem;
-      margin-top: 0.15rem;
-      padding: 0.15rem 0.5rem;
-    }
-
-    input:focus {
-      border: 1px solid #2EC4B6;
-      outline: none;
-    }
-
-    input[readonly] {
-      color: #01162755;
-      cursor: not-allowed;
-    }
-
-    button {
-      background-color: #011627;
-      border: none;
-      border-radius: 0.25rem;
-      color: #f5fff1;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      text-transform: uppercase;
-    }
-
-    .regen {
-      font-size: 0.5rem;
-      margin-top: 0.25rem;
-      padding: 0.05rem 0.5rem;
-      width: fit-content;
+    a {
+      color: #2EC4B6;
     }
   }
 </style>
