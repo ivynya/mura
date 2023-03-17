@@ -1,38 +1,18 @@
-# create-svelte
+# MURA
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+MURA is a group scheduling tool. It's similar in functionality to services like when2meet, but features a more modern interface that better supports mobile (and other various screen sizes). You can host it yourself using Docker.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- MURA events display for participant's local timezones
+- Create MURA events for specific days and times
+- Add extra meeting details compared to other services
+- Get a MURA Suggested Meeting time and date in-app
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Server Load
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+MURA features an API written in Go and a SvelteKit frontend using a Deno community adapter. This means it's cheaper to run than a traditional Node service - with a total Docker image size of about 150MB and about 35MB combined RAM usage (on a container limited to 512MB).
 
-## Developing
+## License
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+MIT
