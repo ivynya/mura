@@ -22,7 +22,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/mura:latest
+          tags: ghcr.io/${{ github.repository }}/app:latest
   build-mura-api:
     runs-on: ubuntu-latest
     steps:
@@ -39,5 +39,5 @@ jobs:
         with:
           context: ./api
           push: true
-          tags: ghcr.io/${{ github.repository }}/mura-api:latest
+          tags: ghcr.io/${{ github.repository }}/api:latest
 
