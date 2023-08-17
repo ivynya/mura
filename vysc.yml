@@ -15,7 +15,7 @@ vysc_nginx:
 
 services:
   mura:
-    image: ghcr.io/ivynya/mura:latest
+    image: ghcr.io/ivynya/mura/app:latest
     restart: unless-stopped
     ports:
       - 5200:3000
