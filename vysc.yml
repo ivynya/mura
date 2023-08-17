@@ -2,24 +2,24 @@ version: '3.7'
 
 vysc_project: mura
 vysc_nginx:
-  mura:
+  app:
     listen_host: mura.ivy.direct
     listen_path: /
     listen_port: 80
     proxy_port: 5200
-  mura-api:
+  api:
     listen_host: io.ivy.direct
     listen_path: /mura
     listen_port: 80
     proxy_port: 5201
 
 services:
-  mura:
+  app:
     image: ghcr.io/ivynya/mura/app:latest
     restart: unless-stopped
     ports:
       - 5200:3000
-  mura-api:
+  api:
     image: ghcr.io/ivynya/mura/api:latest
     restart: unless-stopped
     ports:
