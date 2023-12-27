@@ -452,8 +452,8 @@
       "sizes": "1024x1024"
     }
   ],
-  "theme_color": "#213147",
-  "background_color": "#213147",
+  "theme_color": "#011627",
+  "background_color": "#011627",
   "display": "fullscreen",
   "orientation": "any",
   "scope": "/"
