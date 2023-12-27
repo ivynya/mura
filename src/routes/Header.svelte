@@ -17,10 +17,7 @@
 </script>
 
 <header>
-  <h1>
-    <img src="/favicon.png" alt="Mura Icon">
-    <span>MURA</span>
-  </h1>
+  <h1><span>MURA</span></h1>
   {#if $mura.meeting_id && $mura.meeting_id != 'XYZI'}
   <code class="share">mura.ivy.direct/{$mura.meeting_id}</code>
   {/if}
@@ -46,14 +43,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-		padding: 0.5rem 2rem;
+		padding: 0.5rem 2.5rem;
     padding-top: 0.35rem;
-
-    img {
-      height: 50px;
-      width: 50px;
-      margin-right: 10px;
-    }
 
 		h1 {
       display: flex;
