@@ -2,37 +2,50 @@
 	import { createEventDispatcher } from "svelte";
 	import { mura, user } from "../lib/mura";
 
-  export let hour: number;
-  export let hourLocalized: number;
-  export let row: number;
 
-  export let del: boolean;
-  export let firstCorner: [number, number];
-  export let secondCorner: [number, number];
-  $: highlight = (del === userSelected)
-    && row >= firstCorner[0]
-    && row <= secondCorner[0]
-    && hour >= firstCorner[1]
-    && hour <= secondCorner[1];
 
   const dispatch = createEventDispatcher();
   const mouseDown = () => dispatch("mousedown", { row, hour, del: userSelected });
   const mouseEnter = () => dispatch("mouseenter", { row, hour });
   const mouseUp = () => dispatch("mouseup");
 
-  // Determines if the user has selected this hour as available
-  $: userSelected = $user.availability[row]?.times.some(t => t === hour);
 
   // Generate a normalized value from 0 to 5 for availability
-  // based on participant availability and total participants
-  export let pAvailability: number[];
-  $: heatmapNormal = (((pAvailability.filter(t => t === hour).length / $mura.participants.length) * 5) || 0).toFixed(0);
+  
+  interface Props {
+    hour: number;
+    hourLocalized: number;
+    row: number;
+    del: boolean;
+    firstCorner: [number, number];
+    secondCorner: [number, number];
+    // based on participant availability and total participants
+    pAvailability: number[];
+  }
+
+  let {
+    hour,
+    hourLocalized,
+    row,
+    del,
+    firstCorner,
+    secondCorner,
+    pAvailability
+  }: Props = $props();
+  // Determines if the user has selected this hour as available
+  let userSelected = $derived($user.availability[row]?.times.some(t => t === hour));
+  let highlight = $derived((del === userSelected)
+    && row >= firstCorner[0]
+    && row <= secondCorner[0]
+    && hour >= firstCorner[1]
+    && hour <= secondCorner[1]);
+  let heatmapNormal = $derived((((pAvailability.filter(t => t === hour).length / $mura.participants.length) * 5) || 0).toFixed(0));
 </script>
 
 <button
-  on:mousedown={mouseDown}
-  on:mouseenter={mouseEnter}
-  on:mouseup={mouseUp}
+  onmousedown={mouseDown}
+  onmouseenter={mouseEnter}
+  onmouseup={mouseUp}
   class="heatmap-{heatmapNormal}"
   class:highlight
   class:userSelected>

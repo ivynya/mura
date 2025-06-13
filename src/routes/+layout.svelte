@@ -1,12 +1,17 @@
 <script lang="ts">
 	import Footer from "./Footer.svelte";
 	import Header from "./Header.svelte";
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 
 <div id="app">
   <Header />
 	<main>
-  <slot></slot>
+  {@render children?.()}
   </main>
 	<Footer />
 </div>

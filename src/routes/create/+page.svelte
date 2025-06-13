@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
 	import { onMount } from "svelte";
 	import { createMura, validateMuraID } from "../../lib/api";
 	import type { Mura } from "../../lib/mura";
 
-  let cMura: Mura = {
+  let cMura: Mura = $state({
     meeting_name: "",
     meeting_desc: "",
     meeting_id: "",
@@ -16,29 +18,33 @@
     time_from: new Date().toISOString(),
     time_to: new Date().toISOString(),
     participants: [],
-  };
+  });
 
-  let inputTimeFrom: number = 8;
-  let inputTimeTo: number = 13;
-  let tzOffset: number = parseInt((new Date().getTimezoneOffset() / 60).toFixed(0));
+  let inputTimeFrom: number = $state(8);
+  let inputTimeTo: number = $state(13);
+  let tzOffset: number = $state(parseInt((new Date().getTimezoneOffset() / 60).toFixed(0)));
 
-  $: cMura.time_from = (() => {
-    const days = Math.floor((inputTimeFrom + tzOffset) / 24);
-    const hrs = (inputTimeFrom + tzOffset) % 24;
-    const date = new Date("2021-01-01T00:00:00.000Z");
-    date.setUTCDate(1 + days);
-    date.setUTCHours(hrs);
-    return date.toISOString();
-  })();
+  run(() => {
+    cMura.time_from = (() => {
+      const days = Math.floor((inputTimeFrom + tzOffset) / 24);
+      const hrs = (inputTimeFrom + tzOffset) % 24;
+      const date = new Date("2021-01-01T00:00:00.000Z");
+      date.setUTCDate(1 + days);
+      date.setUTCHours(hrs);
+      return date.toISOString();
+    })();
+  });
 
-  $: cMura.time_to = (() => {
-    const days = Math.floor((inputTimeFrom + tzOffset) / 24);
-    const hrs = (inputTimeTo + tzOffset) % 24;
-    const date = new Date("2021-01-01T00:00:00.000Z");
-    date.setUTCDate(1 + days);
-    date.setUTCHours(hrs);
-    return date.toISOString();
-  })();
+  run(() => {
+    cMura.time_to = (() => {
+      const days = Math.floor((inputTimeFrom + tzOffset) / 24);
+      const hrs = (inputTimeTo + tzOffset) % 24;
+      const date = new Date("2021-01-01T00:00:00.000Z");
+      date.setUTCDate(1 + days);
+      date.setUTCHours(hrs);
+      return date.toISOString();
+    })();
+  });
 
   async function generateMeetingCode() {
     do {
@@ -73,13 +79,13 @@
   }
 </script>
 
-<form on:submit={submit}>
+<form onsubmit={submit}>
   <img src="/plant.png" alt="Plant Icon">
   <h2>Create New Mura</h2>
   <label for="meeting_id">
     Meeting ID
     <input required readonly type="text" id="meeting_id" bind:value={cMura.meeting_id}>
-    <button type="button" class="regen" on:click={generateMeetingCode}>Regenerate Meeting ID</button>
+    <button type="button" class="regen" onclick={generateMeetingCode}>Regenerate Meeting ID</button>
   </label>
   <label for="meeting_name">
     Meeting Name

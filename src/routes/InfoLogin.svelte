@@ -2,7 +2,7 @@
 	import { createMuraParticipant, getMura } from "$lib/api";
   import { user, mura } from "../lib/mura";
 
-  let username: string = "";
+  let username: string = $state("");
   async function login(e: Event) {
     e.preventDefault();
     $user.name = username;
@@ -42,7 +42,7 @@
       <span>Your Name</span>
       <input id="name" type="text" placeholder="Public Nickname" bind:value={username}>
     </label>
-    <button on:click={login}>Continue</button>
+    <button onclick={login}>Continue</button>
   </form>
   {/if}
 </section>

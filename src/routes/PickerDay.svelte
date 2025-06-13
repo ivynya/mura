@@ -2,21 +2,30 @@
 	import { mura } from "../lib/mura";
 	import PickerHour from "./PickerHour.svelte";
   
-  export let row: number;
 
-  export let del: boolean;
-  export let firstCorner: [number, number];
-  export let secondCorner: [number, number];
+  interface Props {
+    row: number;
+    del: boolean;
+    firstCorner: [number, number];
+    secondCorner: [number, number];
+  }
 
-  $: from = new Date($mura.time_from).getUTCHours();
-  $: toHours = new Date($mura.time_to).getUTCHours();
-  $: to = toHours - from < 0 ? 24 + toHours - from : toHours - from;
+  let {
+    row,
+    del,
+    firstCorner,
+    secondCorner
+  }: Props = $props();
+
+  let from = $derived(new Date($mura.time_from).getUTCHours());
+  let toHours = $derived(new Date($mura.time_to).getUTCHours());
+  let to = $derived(toHours - from < 0 ? 24 + toHours - from : toHours - from);
 
   // Maps participants into anonymized availability 2D array
   // Formatted as flat number[] for availability on this day
-  $: pAvailability = $mura.participants
+  let pAvailability = $derived($mura.participants
     .map(p => p.availability[row])
-    .map(d => d.times).flat();
+    .map(d => d.times).flat());
 
   // Converts a displayed hour index (i + from) in UTC to
   // local time zone hours, in 24 hour format (0-23)

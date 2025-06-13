@@ -8,8 +8,8 @@
 
 <footer>
   <nav>
-    <button on:click={() => scroll(0)}>Schedule</button>
-    <button on:click={() => scroll(1)}>Information</button>
+    <button onclick={() => scroll(0)}>Schedule</button>
+    <button onclick={() => scroll(1)}>Information</button>
   </nav>
 </footer>
 

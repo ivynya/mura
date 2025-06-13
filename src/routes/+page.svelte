@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
   import { mura, user } from "../lib/mura";
 
-	$: $mura.participants[$mura.participants.findIndex(u => u.name === $user.name)] = $user;
+	run(() => {
+		$mura.participants[$mura.participants.findIndex(u => u.name === $user.name)] = $user;
+	});
 
-	let mID = "";
+	let mID = $state("");
 	function join(e: Event) {
 		e.preventDefault();
 		window.location.href = `/${mID}`;
@@ -16,7 +20,7 @@
 	<p>MURA is open source on GitHub. If you like it, consider giving the repository a star or donating through GitHub Sponsors. Just $1/month gets you access to additional Ivy Direct software!</p>
 	<p>Get started by creating a new Mura in the top right, or:</p>
 	<br>
-	<form on:submit={join}>
+	<form onsubmit={join}>
 		<h3>Join a Meeting</h3>
 		<label for="meeting_ID">Meeting ID</label>
 		<input type="text" id="meeting_id" placeholder="XYZI" bind:value={mID}>

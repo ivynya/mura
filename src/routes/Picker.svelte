@@ -3,8 +3,8 @@
 	import { mura, user } from "../lib/mura";
 	import { updateMuraParticipant } from "$lib/api";
 
-  $: from = new Date($mura.date_from).getDate();
-  $: to = new Date($mura.date_to).getDate() - from;
+  let from = $derived(new Date($mura.date_from).getDate());
+  let to = $derived(new Date($mura.date_to).getDate() - from);
 
   function getDateFromDay(from: Date, day: number) {
     switch ((new Date($mura.date_from).getUTCDay() + day) % 7) {
@@ -26,9 +26,9 @@
   }
 
   let isDragging = false;
-  let isDelete = false;
-  let firstCorner: [number, number] = [-1, -1];
-  let secondCorner: [number, number] = [-1, -1];
+  let isDelete = $state(false);
+  let firstCorner: [number, number] = $state([-1, -1]);
+  let secondCorner: [number, number] = $state([-1, -1]);
   let pinCorner: [number, number] = [-1, -1];
   
   function mouseDown(e: CustomEvent) {

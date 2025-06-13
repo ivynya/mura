@@ -6,10 +6,10 @@
 	import { onMount } from "svelte";
   import { mura, user } from "../lib/mura";
 
-  let activePage: "meeting" | "participants" | "help" = "meeting";
-  let meetingTime = "";
-  let meetingParticipants = 0;
-  let meetingIncludesUser = false;
+  let activePage: "meeting" | "participants" | "help" = $state("meeting");
+  let meetingTime = $state("");
+  let meetingParticipants = $state(0);
+  let meetingIncludesUser = $state(false);
 
   onMount(() => {
     user.subscribe(() => {
@@ -69,7 +69,7 @@
 
 <div class="info-bar">
   <InfoHeader />
-  <span class="spacer" />
+  <span class="spacer"></span>
   {#if activePage === "meeting"}
   <InfoLogin />
   {/if}
